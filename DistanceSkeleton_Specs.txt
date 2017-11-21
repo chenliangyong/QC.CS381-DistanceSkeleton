@@ -1,0 +1,124 @@
+
+
+
+Project 4: Compute the distance transform (using 8-distance) of the input image
+	then, from the resulting distance transform to extract the skeltons of objects 
+        using 4-neighbor-local-maxima method.
+	     
+
+**************************************
+Language: Java
+	
+Due date: Soft copy: 10/8/2017 Sunday before Midnight
+	  hard copy: 10/10/2017 Tuesday in class
+
+*************************************
+
+I. Input: a binary image 
+	  // Use argv[0]
+
+II. Outputs: 
+
+      You should have three output files: // Use argv[1], argv[2], and argv[3].
+
+	- Use argv[1] to do:
+  
+		1) Create a distance transform image from the result of Pass-2 
+			with *newRowVal and newColVal* image header for future processing.
+
+	- Use argv[2] to do:
+ 
+ 		2) Create a skeleton image from the result of 4-neighbors-local-maxima computation 
+			with *newRowVal and newColVal* image header for future processing.
+
+	- Use argv[3] to do: 
+ 
+		3) Pretty print the result of the Pass-1 of distance transform 
+			with proper caption
+	
+		4) Pretty print the result of the Pass-2 of distance transform 
+			with proper caption
+
+		5) Pretty print the result of the skeleton 
+			with proper caption
+
+
+*******************************
+III. Data structure:
+*******************************
+ - An ImageProcessing class
+
+	- numRows (int)
+	- numCols (int)
+	- minVal (int)
+	- maxVal (int)
+	- newMinVal (int)
+	- newMaxVal (int)
+	- ZeroFramedAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows + 2 by numCols + 2.
+	- skeletonAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows + 2 by numCols + 2.
+
+	- methods:
+	- constructor(s)
+		- need to dynamically allocate ZeroFrameAry and skeletonAry
+		- assign values to numRows,..., etc.
+ 	- zeroFramed  
+	- loadImage 
+			// Read from the input file onto ZeroFrameAry  
+			// the first pixel of input image is loaded 
+			// at ZeroFrameAry[1][1]
+
+	- fistPassDistance // Scan from T -> B and L -> R begin at pixel (1,1)
+	- secondPassDistance // Scan from B -> T and R -> L begin at pixel (?,?) on your own
+	- computeSkelton
+		// if p(i,j) > 0 and  p(i,j) >= to all its 4 neighobers
+	       	 	skeletonAry(i,j) = p(i,j)
+		   else
+        		 skeletonAry(i,j) = 0
+
+	- prettyPrintDistance
+	 // if p(i,j) == 0 print use 2 blank space
+	    else print p(i,j) use 2 digit space 
+     	
+  	- prettyPrintSkeleton
+	 // if p(i,j) == 0 print 1 blank space
+	    else print 1
+  
+*******************************
+III. Algorithms 
+*******************************
+  
+step 0: read the image header
+	dynamically allocate zerpFramedAry and skeletonAry with extra 2 rows and 2 cols
+
+step 1: - zeroFrame the zerpFramedAry.
+	
+	- loadImage 
+
+step 2: - firstPassDistance // 8-distance algorithm taught in class
+
+	- prettyPrintDistace of the result of Pass-1 
+		with caption, in argv[3]
+	
+step 3: - secondPassDistance // 8-distance algorithm taught in class
+	// In second pass, you need to keep track the newMinVal and newMaxVal 
+
+	- From the result of Pass-2, write to argv[1] (without the 2 extra rows and columns)
+		as an image file with *newimage header, for future processing.
+
+	- prettyPrintDistace of the result of Pass-2 
+			with caption, in argv[3]
+
+
+step 4: - computeSkeleton from the result of Pass-2.
+		// see this method given in the above 
+
+	- From the result of computeSkeleton, write to argv[2] (without the 2 extra rows and columns)
+           as image file with *new min and max for image header, for future processing.
+
+ 	- prettyPrintSkeleton of the resulting skeleton 
+		with caption, in argv[3]
+
+	
+
